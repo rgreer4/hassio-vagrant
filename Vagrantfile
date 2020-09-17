@@ -95,6 +95,7 @@ module HassioCommunityAddons
     def vagrant_config(config)
       config.vm.box = @config['box']
       config.vm.post_up_message = @config['post_up_message']
+      config.vm.boot_timeout = 600
     end
 
     # Defines a Vagrant virtual machine
@@ -117,11 +118,21 @@ module HassioCommunityAddons
     def machine_config(machine)
       machine.vm.hostname = @config['hostname']
       machine.vm.network 'private_network', type: 'dhcp'
-      machine.vm.network(
-        'public_network',
-        type: 'dhcp',
-        bridge: @config['bridge']
-      )
+      if @config['use_dhcp']        
+        machine.vm.network(
+          'public_network',
+          type: 'dhcp',
+          bridge: @config['bridge']
+        )
+      else
+        machine.vm.network(
+          'public_network',
+          ip: @config['ip_address'],
+          netmask: @config['netmask'],
+          gw: @config['gateway_ip'],
+          bridge: @config['bridge']
+        )
+      end
     end
 
     # Configures the Virtualbox provider
