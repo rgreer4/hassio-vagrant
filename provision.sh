@@ -27,6 +27,7 @@ readonly APT_REQUIREMENTS=(
     dkms
     jq
     network-manager
+    net-tools
     socat
     software-properties-common
 )
@@ -44,8 +45,21 @@ readonly APT_REQUIREMENTS=(
 #   None
 # ------------------------------------------------------------------------------
 install_requirements() {
+    apt-get clean
+    rm -rf /var/lib/apt/lists/*
+
+    sed -i 's/[a-z][a-z].archive.ubuntu.com/archive.ubuntu.com/g' /etc/apt/sources.list
+
+    mkdir /etc/gcrypt
+    touch /etc/gcrypt/hwf.deny
+    echo all >> /etc/gcrypt/hwf.deny
+
+    apt-get update -o Acquire::CompressionTypes::Order::=gz
     apt-get update
-    DEBIAN_FRONTEND=noninteractive apt-get install -y "${APT_REQUIREMENTS[@]}"
+    DEBIAN_FRONTEND=noninteractive apt-get install -y "${APT_REQUIREMENTS[@]}"     
+    #DEBIAN_FRONTEND=noninteractive sudo apt-get install -y apparmor-utils apt-transport-https avahi-daemon ca-certificates curl dbus dkms jq network-manager socat software-properties-common
+
+    apt-get update --fix-missing
 }
 
 # ------------------------------------------------------------------------------
@@ -64,12 +78,14 @@ install_docker() {
     lsb_release=$(lsb_release -cs)
 
     curl -fsSL "${DOCKER_DOWNLOAD}/${os}/gpg" | sudo apt-key add -
+    #curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
     
-    add-apt-repository \
-        "deb [arch=amd64] ${DOCKER_DOWNLOAD}/${os} ${lsb_release} stable"
+    add-apt-repository "deb [arch=amd64] ${DOCKER_DOWNLOAD}/${os} ${lsb_release} stable"
+    #add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu focal stable"
 
     apt-get update
     DEBIAN_FRONTEND=noninteractive apt-get install -y docker-ce
+    #DEBIAN_FRONTEND=noninteractive sudo apt-get install -y docker-ce
 
     usermod -aG docker ubuntu
 }
@@ -84,6 +100,7 @@ install_docker() {
 # ------------------------------------------------------------------------------
 install_hassio() {
     curl -sL "${HASSIO_INSTALLER}" | bash -s
+    #must su to root to run this manually #curl -sL https://raw.githubusercontent.com/home-assistant/supervised-installer/master/installer.sh | bash -s
 }
 
 # ------------------------------------------------------------------------------
