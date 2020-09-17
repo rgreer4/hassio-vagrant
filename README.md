@@ -1,5 +1,9 @@
 # Community Hass.io Add-ons: Vagrant
 
+# Installation
+
+1. bcdedit /set hypervisorlaunchtype off
+
 [![GitHub Release][releases-shield]][releases]
 ![Project Stage][project-stage-shield]
 [![License][license-shield]](LICENSE.md)
