@@ -2,11 +2,21 @@
 
 # Installation
 
-Note this config will request an IP from your upstream gateway and operates on bridged mode on your upstream network.
+Note this config will request an IP from your upstream gateway and operates on bridged mode on your upstream network. Discovery and add-ons work.
 
-1. In Windows features, disable Hyper-V and Windows Subsystem for Linux
-2. In powershell, as admin, run: bcdedit /set hypervisorlaunchtype off
+1. In Windows features, disable Hyper-V and Windows Subsystem for Linux (on root Win config, search for "Hyper")
+2. In powershell, run as admin, run: bcdedit /set hypervisorlaunchtype off
 3. Reboot
+4. Install latest VirtualBox https://www.virtualbox.org/wiki/Downloads
+5. Install latest VirtualBox Extensions https://www.virtualbox.org/wiki/Downloads
+6. Install Vagrant https://www.vagrantup.com/downloads.html
+7. Install Git from https://gitforwindows.org
+7. Add C:\Program Files\Oracle\VirtualBox to the Windows path
+8. Reboot
+9. git clone https://github.com/rgreer4/hassio-vagrant.git somewhere (note your HA config will live in here too)
+10. Edit the config.yaml (At least set: dhcp, if static the ip/netmask/gateway, and any custom hostname. Leave bridge alone.)
+11. vagrant up (yes to install vagrant-winnfsd, pick the real NIC)
+12. Go to http://IP:8123 and make sure it works
 
 ## About
 
