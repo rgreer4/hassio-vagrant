@@ -16,7 +16,7 @@ Note this config will request an IP from your upstream gateway and operates on b
 9. git clone https://github.com/rgreer4/hassio-vagrant.git somewhere (note your HA config will live in here too)
 10. Edit the config.yaml (At least set: dhcp, if static the ip/netmask/gateway, and any custom hostname. Leave bridge alone.)
 11. vagrant up (yes to install vagrant-winnfsd, pick the real NIC)
-12. Go to http://IP:8123 and make sure it works
+12. Wait about 5 minutes after it appears done. Go to http://IP:8123 and make sure it works.
 
 ## About
 
