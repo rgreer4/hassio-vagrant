@@ -2,26 +2,16 @@
 
 # Installation
 
-1. bcdedit /set hypervisorlaunchtype off
+Note this config will request an IP from your upstream gateway and operates on bridged mode on your upstream network.
 
-[![GitHub Release][releases-shield]][releases]
-![Project Stage][project-stage-shield]
-[![License][license-shield]](LICENSE.md)
+1. In Windows features, disable Hyper-V and Windows Subsystem for Linux
+2. In powershell, as admin, run: bcdedit /set hypervisorlaunchtype off
+3. Reboot
 
-[![Code Climate][codeclimate-shield]][codeclimate]
-![Project Maintenance][maintenance-shield]
-[![GitHub Activity][commits-shield]][commits]
-
-[![Bountysource][bountysource-shield]][bountysource]
-[![Discord][discord-shield]][discord]
-[![Community Forum][forum-shield]][forum]
-
-[![Buy me a coffee][buymeacoffee-shield]][buymeacoffee]
+## About
 
 This Vagrant box contains [Home Assistant][home-assistant], which is
 based on Hass.io.
-
-## About
 
 This Vagrant virtual machine allows you to test and play with Hass.io and
 Home Assistant, and is a great environment for add-on developers. A simple
